@@ -1,8 +1,5 @@
 # ReSet
 ReSet is a mobile application built using React Native and Expo, with a Node.js and Express.js backend and an SQLite database. It aims to provide a structured mobile experience supported by backend APIs and database management.
-# ReSet
-
-ReSet is a mobile application project developed using **React Native, Expo, Node.js, Express.js, and SQLite**. The project is organized into a frontend application and a backend server.
 
 ## Tech Stack
 
