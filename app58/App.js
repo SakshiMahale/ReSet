@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, FlatList, ScrollView, Alert, S
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 // Android emulator: 10.0.2.2 | Real phone: your PC's Wi-Fi IP, e.g. http://192.168.1.5:5000
-const API = 'http://192.168.29.94:5000';
+const API = 'http://10.144.239.34:5000';
 
 const api = async (p, m = 'GET', b) => {
   const r = await fetch(API + p, { method: m, headers: { 'Content-Type': 'application/json' }, body: b ? JSON.stringify(b) : undefined });
@@ -147,7 +147,31 @@ export default function App() {
   return (
     <SafeAreaView style={s.root}>
       <StatusBar barStyle="light-content" />
-      <Text style={s.top}>Hey {user.name || 'traveller'} 👋</Text>
+            <View style={s.header}>
+        <Text style={s.top}>Hey {user.name || 'traveller'} 👋</Text>
+        <TouchableOpacity
+          style={s.logoutBtn}
+          onPress={() => {
+            Alert.alert(
+              'Logout',
+              'Are you sure you want to sign out?',
+              [
+                { text: 'Cancel', style: 'cancel' },
+                {
+                  text: 'Logout',
+                  style: 'destructive',
+                  onPress: () => {
+                    setUser(null);
+                    setTab('Explore');
+                  },
+                },
+              ]
+            );
+          }}
+        >
+          <Text style={s.logoutText}>Logout ↪</Text>
+        </TouchableOpacity>
+      </View>
       <View style={{ flex: 1, padding: 12 }}>
         {tab === 'Explore' && <Explore user={user} />}
         {tab === 'Create' && <Create user={user} done={() => setTab('Explore')} />}
@@ -180,4 +204,20 @@ const s = StyleSheet.create({
   card2: { backgroundColor: C.card, color: C.txt, borderRadius: 12, padding: 12, marginVertical: 5 },
   row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 8 },
   bar: { flexDirection: 'row', justifyContent: 'space-around', backgroundColor: C.card, paddingVertical: 8 },
+    header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingRight: 14,
+  },
+  logoutBtn: {
+    backgroundColor: '#3A2445',
+    paddingHorizontal: 14,
+    paddingVertical: 9,
+    borderRadius: 10,
+  },
+  logoutText: {
+    color: '#F472B6',
+    fontWeight: '700',
+  },
 });
